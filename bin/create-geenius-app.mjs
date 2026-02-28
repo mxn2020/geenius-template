@@ -38,6 +38,13 @@ async function copyDir(src, dest, replacements) {
         if (entry.isDirectory()) {
             await copyDir(srcPath, destPath, replacements);
         } else {
+            let finalDestPath = destPath;
+
+            // npm strips .gitignore, so we store it as 'gitignore' and rename it here
+            if (entry.name === 'gitignore') {
+                finalDestPath = join(dest, '.gitignore');
+            }
+
             let content = await fs.readFile(srcPath, 'utf-8');
 
             // Replace placeholders
@@ -45,7 +52,7 @@ async function copyDir(src, dest, replacements) {
                 content = content.replaceAll(key, value);
             }
 
-            await fs.writeFile(destPath, content);
+            await fs.writeFile(finalDestPath, content);
         }
     }
 }
