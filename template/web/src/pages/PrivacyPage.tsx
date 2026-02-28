@@ -2,7 +2,7 @@ export default function PrivacyPage() {
     return (
         <div className="legal-page">
             <h1>Privacy Policy</h1>
-            <p className="legal-page__updated">Last updated: {{ YEAR }}</p>
+            <p className="legal-page__updated">Last updated: {"{{ YEAR }}"}</p>
 
             <section>
                 <h2>1. Information We Collect</h2>
@@ -11,7 +11,7 @@ export default function PrivacyPage() {
 
             <section>
                 <h2>2. How We Use Your Information</h2>
-                <p>We use your information to provide and improve {{ APP_NAME }}, process payments, and communicate with you about your account.</p>
+                <p>We use your information to provide and improve {"{{ APP_NAME }}"}, process payments, and communicate with you about your account.</p>
             </section>
 
             <section>

@@ -10,10 +10,10 @@ export default function LandingPage() {
                 <div className="landing-hero__content">
                     <h1 className="landing-hero__title">
                         <Sparkles size={40} style={{ color: 'var(--color-accent)' }} />
-                        <span>{{ APP_NAME }}</span>
+                        <span>{"{{ APP_NAME }}"}</span>
                     </h1>
                     <p className="landing-hero__tagline">
-                        {{ APP_DESCRIPTION }}
+                        {"{{ APP_DESCRIPTION }}"}
                     </p>
                     <div className="landing-hero__actions">
                         <button className="btn btn--primary btn--lg" onClick={() => navigate('/app')}>

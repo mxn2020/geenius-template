@@ -1,9 +1,10 @@
 import { useState, useEffect, type ReactNode } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom' // Added useLocation
 import { useConvexAuth, useQuery, useMutation } from 'convex/react'
 import { useAuthActions } from "@convex-dev/auth/react"
 import { api } from '../../convex/_generated/api'
 import { Sparkles, Menu, X } from 'lucide-react'
+import { useDevLogger } from '../hooks/useDevLogger' // Added this import
 
 interface LayoutProps {
     children: ReactNode
@@ -16,13 +17,17 @@ export default function Layout({ children }: LayoutProps) {
     const ensureProfile = useMutation(api.users.ensureProfile)
     const navigate = useNavigate()
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const location = useLocation() // Added this
+    const logger = useDevLogger('Layout') // Added this
 
     // Auto-create profile if authenticated user doesn't have one
     useEffect(() => {
-        if (isAuthenticated && me && !me.hasProfile) {
-            ensureProfile({}).catch(console.error)
+        logger.debug('Layout mounted', { context: { path: location.pathname } });
+        if (isAuthenticated) {
+            ensureProfile()
+                .catch(err => console.error("Failed to ensure profile:", err))
         }
-    }, [isAuthenticated, me, ensureProfile])
+    }, [isAuthenticated, ensureProfile, location.pathname, logger])
 
     useEffect(() => {
         if (mobileMenuOpen) {
@@ -38,7 +43,7 @@ export default function Layout({ children }: LayoutProps) {
             <header className="app__header">
                 <Link to="/" className="app__logo">
                     <Sparkles className="app__logo-icon" />
-                    {{ APP_NAME }}
+                    {"{{ APP_NAME }}"}
                 </Link>
 
                 <button
@@ -80,7 +85,7 @@ export default function Layout({ children }: LayoutProps) {
             </main>
 
             <footer className="app__footer">
-                <p>{{ APP_NAME }} — AI-powered application</p>
+                <p>{"{{ APP_NAME }}"} — AI-powered application</p>
                 <div className="app__footer-links">
                     <Link to="/terms">Terms of Service</Link>
                     <Link to="/privacy">Privacy Policy</Link>

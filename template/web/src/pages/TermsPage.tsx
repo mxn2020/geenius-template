@@ -2,16 +2,16 @@ export default function TermsPage() {
     return (
         <div className="legal-page">
             <h1>Terms of Service</h1>
-            <p className="legal-page__updated">Last updated: {{ YEAR }}</p>
+            <p className="legal-page__updated">Last updated: {"{{ YEAR }}"}</p>
 
             <section>
                 <h2>1. Acceptance of Terms</h2>
-                <p>By using {{ APP_NAME }}, you agree to be bound by these Terms of Service.</p>
+                <p>By using {"{{ APP_NAME }}"}, you agree to be bound by these Terms of Service.</p>
             </section>
 
             <section>
                 <h2>2. Description of Service</h2>
-                <p>{{ APP_NAME }} provides AI-powered tools and services. {{ APP_DESCRIPTION }}</p>
+                <p>{"{{ APP_NAME }}"} provides AI-powered tools and services. {"{{ APP_DESCRIPTION }}"}</p>
             </section>
 
             <section>

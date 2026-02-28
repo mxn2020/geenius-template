@@ -56,6 +56,17 @@ export default defineSchema({
         .index("by_caller", ["caller"])
         .index("by_status", ["status"]),
 
+    // ── Dev Logs ─────────────────────────────────────────────────
+    devLogs: defineTable({
+        level: v.union(v.literal("debug"), v.literal("info"), v.literal("warn"), v.literal("error")),
+        message: v.string(),
+        context: v.optional(v.string()), // JSON stringified
+        component: v.string(),
+        userId: v.optional(v.string()), // Optional reference to the user who triggered the log
+    })
+        .index("by_level", ["level"])
+        .index("by_component", ["component"]),
+
     // ── Audit Logs ───────────────────────────────────────────────
     auditLogs: defineTable({
         action: v.string(),

@@ -9,7 +9,7 @@ export default function AppHome() {
         <div className="app-home">
             <div className="app-home__hero">
                 <Sparkles size={48} style={{ color: 'var(--color-accent)' }} />
-                <h1>Welcome to {{ APP_NAME }}</h1>
+                <h1>Welcome to {"{{ APP_NAME }}"}</h1>
                 <p style={{ color: 'var(--color-smoke-gray)', maxWidth: '600px', margin: '16px auto 0', lineHeight: 1.7 }}>
                     This is your main application page. Replace this content with your app-specific features
                     and functionality. The boilerplate includes authentication, payments, admin tools, and

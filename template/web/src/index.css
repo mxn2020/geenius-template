@@ -1546,7 +1546,7 @@ h1 {
     overflow-y: auto;
 }
 
-.audit-category-badge {
+.log-level-badge {
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -1555,24 +1555,32 @@ h1 {
     border-radius: var(--radius-full);
 }
 
-.audit-category-badge--auth {
-    background: rgba(139, 92, 246, 0.15);
-    color: #a78bfa;
+.log-level-badge--debug {
+    background: rgba(148, 163, 184, 0.15);
+    color: #94a3b8;
 }
 
-.audit-category-badge--admin {
-    background: rgba(245, 158, 11, 0.15);
-    color: #fbbf24;
-}
-
-.audit-category-badge--system {
+.log-level-badge--info {
     background: color-mix(in srgb, var(--color-accent) 15%, transparent);
     color: var(--color-accent);
 }
 
-.audit-category-badge--billing {
-    background: rgba(16, 185, 129, 0.15);
-    color: var(--color-neon-emerald);
+.log-level-badge--warn {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+}
+
+.log-level-badge--error {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.log-item--warn {
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.log-item--error {
+    border-color: rgba(239, 68, 68, 0.4);
 }
 
 /* ====================================
