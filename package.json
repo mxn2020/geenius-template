@@ -1,0 +1,24 @@
+{
+    "name": "create-geenius-app",
+    "version": "1.0.0",
+    "description": "CLI to scaffold a new Geenius AI app from the production-ready boilerplate",
+    "type": "module",
+    "bin": {
+        "create-geenius-app": "./bin/create-geenius-app.mjs"
+    },
+    "keywords": [
+        "geenius",
+        "boilerplate",
+        "ai",
+        "convex",
+        "react",
+        "vite",
+        "cli"
+    ],
+    "author": "AVS Media",
+    "license": "MIT",
+    "files": [
+        "bin/",
+        "template/"
+    ]
+}
