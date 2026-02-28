@@ -24,6 +24,15 @@ export default function Layout({ children }: LayoutProps) {
         }
     }, [isAuthenticated, me, ensureProfile])
 
+    useEffect(() => {
+        if (mobileMenuOpen) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = ''
+        }
+        return () => { document.body.style.overflow = '' }
+    }, [mobileMenuOpen])
+
     return (
         <div className="app">
             <header className="app__header">
