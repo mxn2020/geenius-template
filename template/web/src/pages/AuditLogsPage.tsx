@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { SkeletonList } from '../components/Skeleton'
+import { Select } from '../components/ui/Select'
 
 export default function AuditLogsPage() {
     const [category, setCategory] = useState<string>('')
@@ -27,19 +28,17 @@ export default function AuditLogsPage() {
                 </div>
             )}
 
-            <div style={{ marginBottom: '16px' }}>
-                <select
+            <div style={{ marginBottom: '16px', minWidth: '160px' }}>
+                <Select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="admin-role-select"
-                    style={{ minWidth: '160px' }}
                 >
                     <option value="">All Categories</option>
                     <option value="auth">Auth</option>
                     <option value="admin">Admin</option>
                     <option value="system">System</option>
                     <option value="billing">Billing</option>
-                </select>
+                </Select>
             </div>
 
             {logs === undefined ? (

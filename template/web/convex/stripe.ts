@@ -51,6 +51,57 @@ export const getProfileByStripeCustomerId = internalQuery({
 
 // ── Queries ──────────────────────────────────────────────────
 
+// Fetch active plans directly from Stripe for the public Pricing page
+export const getActivePlans = action({
+    args: {},
+    handler: async (ctx) => {
+        const stripeKey = process.env.STRIPE_SECRET_KEY;
+        if (!stripeKey) throw new Error("STRIPE_SECRET_KEY not configured");
+
+        const response = await fetch("https://api.stripe.com/v1/products?active=true&expand[]=data.default_price", {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${stripeKey}`,
+            },
+        });
+
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(`Stripe API error: ${error}`);
+        }
+
+        const data = await response.json();
+
+        // Map to public facing interface
+        return data.data.map((product: any) => {
+            const price = product.default_price;
+            let features = [];
+            try {
+                if (product.metadata && product.metadata.features) {
+                    features = JSON.parse(product.metadata.features);
+                }
+            } catch (e) {
+                // ignore
+            }
+
+            return {
+                id: product.id,
+                name: product.name,
+                description: product.description,
+                planKey: product.metadata?.plan || "unknown",
+                appSlug: product.metadata?.app || "",
+                features,
+                price: price ? {
+                    id: price.id,
+                    amount: price.unit_amount, // in cents
+                    currency: price.currency,
+                    interval: price.recurring?.interval, // month/year
+                } : null,
+            };
+        });
+    },
+});
+
 export const getSubscription = query({
     args: {},
     handler: async (ctx) => {
@@ -76,7 +127,7 @@ export const getSubscription = query({
 export const updateSubscription = mutation({
     args: {
         stripeCustomerId: v.string(),
-        plan: v.union(v.literal("free"), v.literal("pro"), v.literal("enterprise")),
+        plan: v.string(),
     },
     handler: async (ctx, { stripeCustomerId, plan }) => {
         const profile = await ctx.db
@@ -111,7 +162,7 @@ export const activateSubscription = internalMutation({
     args: {
         userId: v.string(),
         stripeCustomerId: v.string(),
-        plan: v.union(v.literal("pro"), v.literal("enterprise")),
+        plan: v.string(),
     },
     handler: async (ctx, { userId, stripeCustomerId, plan }) => {
         let profile = await ctx.db
@@ -143,18 +194,15 @@ export const activateSubscription = internalMutation({
 
 export const createCheckoutSession = action({
     args: {
-        plan: v.union(v.literal("pro"), v.literal("enterprise")),
+        priceId: v.string(),
+        planKey: v.string(), // "pro", "enterprise", etc.
     },
-    handler: async (ctx, { plan }) => {
+    handler: async (ctx, { priceId, planKey }) => {
         const userId = await auth.getUserId(ctx);
         if (!userId) throw new Error("Not authenticated");
 
         const stripeKey = process.env.STRIPE_SECRET_KEY;
         if (!stripeKey) throw new Error("STRIPE_SECRET_KEY not configured");
-
-        const priceEnvVar = plan === "pro" ? "STRIPE_PRICE_PRO" : "STRIPE_PRICE_ENTERPRISE";
-        const priceId = process.env[priceEnvVar];
-        if (!priceId) throw new Error(`${priceEnvVar} not configured`);
 
         const siteUrl = process.env.SITE_URL ?? "http://localhost:5173";
 
@@ -182,7 +230,7 @@ export const createCheckoutSession = action({
                 "line_items[0][quantity]": "1",
                 "metadata[app]": "{{APP_SLUG}}",
                 "metadata[userId]": userId,
-                "metadata[plan]": plan,
+                "metadata[plan]": planKey,
             }),
         });
 
@@ -240,7 +288,7 @@ export const handleSubscriptionActive = action({
     args: {
         userId: v.string(),
         stripeCustomerId: v.string(),
-        plan: v.union(v.literal("pro"), v.literal("enterprise")),
+        plan: v.string(),
     },
     handler: async (ctx, { userId, stripeCustomerId, plan }) => {
         console.log(`[handleSubscriptionActive] userId=${userId}, customerId=${stripeCustomerId}, plan=${plan}`);

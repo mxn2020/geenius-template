@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { SkeletonList } from '../components/Skeleton'
+import { Select } from '../components/ui/Select'
 
 type LogLevel = "debug" | "info" | "warn" | "error" | "";
 
@@ -18,19 +19,18 @@ export default function LogsPage() {
                         Structured developer logs for debugging and system monitoring.
                     </p>
                 </div>
-
-                <select
-                    value={level}
-                    onChange={(e) => setLevel(e.target.value as LogLevel)}
-                    className="admin-role-select"
-                    style={{ minWidth: '160px' }}
-                >
-                    <option value="">All Levels</option>
-                    <option value="error">Error Only</option>
-                    <option value="warn">Warning & Error</option>
-                    <option value="info">Info</option>
-                    <option value="debug">Debug</option>
-                </select>
+                <div style={{ minWidth: '160px' }}>
+                    <Select
+                        value={level}
+                        onChange={(e) => setLevel(e.target.value as LogLevel)}
+                    >
+                        <option value="">All Levels</option>
+                        <option value="error">Error Only</option>
+                        <option value="warn">Warning & Error</option>
+                        <option value="info">Info</option>
+                        <option value="debug">Debug</option>
+                    </Select>
+                </div>
             </div>
 
             {logs === undefined ? (

@@ -4,6 +4,7 @@ import { useAuthActions } from '@convex-dev/auth/react'
 import { useNavigate, Link } from 'react-router-dom'
 import { api } from '../../convex/_generated/api'
 import { User, Shield, CreditCard, Trash2, Save } from 'lucide-react'
+import { Input } from '../components/ui/Input'
 
 export default function SettingsPage() {
     const { isAuthenticated } = useConvexAuth()
@@ -75,22 +76,20 @@ export default function SettingsPage() {
                     <h2>Profile</h2>
                 </div>
                 <div className="settings-section__body">
-                    <div className="settings-field">
-                        <label className="settings-field__label">Display Name</label>
-                        <input
+                    <div className="settings-field" style={{ marginBottom: '16px' }}>
+                        <Input
+                            label="Display Name"
                             type="text"
                             value={name}
                             onChange={(e) => { setName(e.target.value); setSaved(false); }}
-                            className="settings-field__input"
                             placeholder="Your name"
                         />
                     </div>
-                    <div className="settings-field">
-                        <label className="settings-field__label">Email</label>
-                        <input
+                    <div className="settings-field" style={{ marginBottom: '16px' }}>
+                        <Input
+                            label="Email"
                             type="email"
                             value={me.email ?? ''}
-                            className="settings-field__input"
                             disabled
                         />
                         <span className="settings-field__hint">Email cannot be changed</span>
@@ -149,11 +148,10 @@ export default function SettingsPage() {
                             <p style={{ color: '#EF4444', fontWeight: 600, marginBottom: '12px' }}>
                                 Type "DELETE" to confirm:
                             </p>
-                            <input
+                            <Input
                                 type="text"
                                 value={deleteConfirmText}
                                 onChange={(e) => setDeleteConfirmText(e.target.value)}
-                                className="settings-field__input"
                                 placeholder='Type "DELETE"'
                                 style={{ marginBottom: '12px' }}
                             />

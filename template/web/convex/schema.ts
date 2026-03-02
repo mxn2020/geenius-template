@@ -11,7 +11,7 @@ export default defineSchema({
         name: v.optional(v.string()),
         role: v.union(v.literal("user"), v.literal("admin")),
         stripeCustomerId: v.optional(v.string()),
-        plan: v.optional(v.union(v.literal("free"), v.literal("pro"), v.literal("enterprise"))),
+        plan: v.optional(v.string()), // e.g. "free", "pro", "enterprise", or dynamic planKey
         // Usage tracking
         monthlyUsageCount: v.optional(v.number()),
         usageResetAt: v.optional(v.number()),

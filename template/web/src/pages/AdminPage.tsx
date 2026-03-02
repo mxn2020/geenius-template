@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useMutation, useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { SkeletonCard } from '../components/Skeleton'
+import { Select } from '../components/ui/Select'
+import { Textarea } from '../components/ui/Textarea'
 
 export default function AdminPage() {
     const prompts = useQuery(api.prompts.getPrompts)
@@ -60,13 +62,12 @@ export default function AdminPage() {
 
                                 {editingPrompt === prompt.promptId ? (
                                     <div className="admin-prompt-editor">
-                                        <textarea
+                                        <Textarea
                                             value={promptDraft}
                                             onChange={(e) => setPromptDraft(e.target.value)}
-                                            className="admin-prompt-textarea"
                                             rows={8}
                                         />
-                                        <div className="admin-prompt-actions">
+                                        <div className="admin-prompt-actions" style={{ marginTop: '12px' }}>
                                             <button className="btn btn--secondary" style={{ fontSize: '0.85rem' }} onClick={() => setEditingPrompt(null)}>
                                                 Cancel
                                             </button>
@@ -124,14 +125,13 @@ export default function AdminPage() {
                                         <span style={{ color: '#999', marginLeft: '8px' }}>{user.role}</span>
                                     </div>
                                     <div>
-                                        <select
+                                        <Select
                                             value={user.role}
                                             onChange={(e) => setRole({ profileId: user._id, role: e.target.value as any })}
-                                            className="admin-role-select"
                                         >
                                             <option value="user">User</option>
                                             <option value="admin">Admin</option>
-                                        </select>
+                                        </Select>
                                     </div>
                                 </div>
                             ))
