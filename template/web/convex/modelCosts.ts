@@ -1,5 +1,16 @@
-import { mutation, query } from "./_generated/server";
+import { mutation, query, internalQuery } from "./_generated/server";
 import { v } from "convex/values";
+
+export const getModelCostInternal = internalQuery({
+    args: { model: v.string() },
+    handler: async (ctx, { model }) => {
+        return await ctx.db
+            .query("modelCosts")
+            .withIndex("by_model", (q) => q.eq("model", model))
+            .first();
+    },
+});
+
 
 export const getAll = query({
     args: {},
