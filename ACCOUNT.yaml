@@ -1,0 +1,12 @@
+services:
+  convex:
+    project: GeeniusTemplate
+  vercel:
+    project: GeeniusTemplate
+  stripe:
+    mode: live
+  nvidia:
+    api: nvidia-nims
+  github:
+    owner: mxn2020
+    repo: geenius-template

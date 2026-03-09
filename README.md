@@ -1,4 +1,6 @@
 # Geenius Template
+[![CI](https://github.com/mxn2020/geenius-template/actions/workflows/ci.yml/badge.svg)](https://github.com/mxn2020/geenius-template/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A production-ready boilerplate for the Geenius AI app ecosystem. Scaffold a new AI-powered application in seconds.
 

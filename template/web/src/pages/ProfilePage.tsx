@@ -6,6 +6,7 @@ import { Zap, Crown, User, Settings, CreditCard } from 'lucide-react'
 import { SkeletonProfile } from '../components/Skeleton'
 import { MissingConfigDialog } from '../components/MissingConfigDialog'
 import { Input } from '../components/ui/Input'
+import { toast } from 'sonner'
 
 export default function ProfilePage() {
     const { isAuthenticated } = useConvexAuth()
@@ -37,7 +38,7 @@ export default function ProfilePage() {
             if (msg.includes('not configured')) {
                 setConfigError(msg)
             } else {
-                alert(msg)
+                toast.error(msg)
             }
         } finally { setLoading(false) }
     }
