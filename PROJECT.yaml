@@ -1,16 +1,18 @@
-id: 6d534439-11a8-444b-903c-d74f539bd400
 name: geenius-template
-description: "Production-ready boilerplate — Vite + React + Convex + Stripe + Auth + AI"
+project_scope: main
+project_type: standalone
+description: Production-ready boilerplate — Vite + React + Convex + Stripe + Auth + AI
 tier: production
 lane: main
 priority: critical
-category: template
-focus: true
-open_tasks: 0
 oss: false
 stack: [typescript, react, convex, vite]
 repo: null
 deploy_url: null
 last_active: 2026-03-02
-tags: [ai, convex]
-notes:
+tags: [template, react, convex, vite, geenius, starter, boilerplate]
+notes: null
+category: boilerplate
+focus: true
+open_tasks: 0
+id: 6d534439-11a8-444b-903c-d74f539bd400

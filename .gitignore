@@ -14,3 +14,8 @@ Thumbs.db
 !.vscode/extensions.json
 .idea
 *.sw?
+
+# Added by AI Agent
+.env
+.env.*
+!.env.example
